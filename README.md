@@ -5,11 +5,11 @@ A [Docker container](https://hub.docker.com/r/jturcino/abaco-d2s-generic/) for r
 
 ## Overview
 
-The contents of this repo describe the `jturcino/abaco-d2s-generic` Docker container that can be registered as an Abaco actor. When run as such an actor, the container will transform another, user-provided Docker container to a Singularity image before storing the image in a specified location on the Stampede2 work filesystem. The actor requires two inputs:
+The contents of this repo describe the `abaco-d2s-generic` Docker container that can be registered as an Abaco actor. When run as such an actor, the container will transform another, user-provided Docker container to a Singularity image before storing the image in a specified location on the Stampede2 work filesystem. The actor requires two inputs:
 * **the Docker container** to transform to a Singularity image
 * **the file path** at which to save the Singularity image
 
-You will need the [Abaco CLI](https://github.com/johnfonner/abaco-cli) to interface with abaco and walk through the tutorial below. 
+You will need the [Abaco CLI](https://github.com/johnfonner/abaco-cli) to interface with Abaco and walk through the tutorial below. 
 
 ## Tutorial
 
@@ -28,7 +28,7 @@ $ id -g
 gid: 222222
 $ id -gn
 G-222222
-$ $WORK/abaco/d2s/
+$ echo $WORK/abaco/d2s/
 /work/03761/jturcino/stampede2/abaco/d2s/
 ```
 **Local**
@@ -44,11 +44,14 @@ $ auth-tokens-create -S
 ### 2. Build a personalized Docker container
 Pull this repo to a directory on your local machine and use the `user`, `uid`, `gid`, and `group` variables that we defined earlier to create a personal version of the Docker container.
 ```
-git clone https://github.com/jturcino/abaco-d2s-generic.git
-cd abaco-d2s-generic
-d2s_container="jturcino/abaco-d2s-generic:latest" # CHANGE "jturcino" TO YOUR DOCKER USERNAME
-docker build --build-arg user=$user --build-arg uid=$uid --build-arg gid=$gid --build-arg group=$group -t $d2s_container .
-docker push $d2s_container
+$ git clone https://github.com/jturcino/abaco-d2s-generic.git
+$ cd abaco-d2s-generic
+$ # CHANGE "jturcino" BELOW TO YOUR DOCKER USERNAME
+$ d2s_container="jturcino/abaco-d2s-generic:latest" 
+$ docker build --build-arg user=$user --build-arg uid=$uid \
+  --build-arg gid=$gid --build-arg group=$group \
+  -t $d2s_container .
+$ docker push $d2s_container
 ```
 
 ### 3. Create the actor
