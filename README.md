@@ -1,7 +1,7 @@
 # abaco-d2s-generic
 A [Docker container](https://hub.docker.com/r/jturcino/abaco-d2s-generic/) for registering a [docker2singularity](https://github.com/TACC/docker2singularity) actor with [Abaco](https://github.com/TACC/abaco) that stores the produced [Singularity](http://singularity.lbl.gov/) images on the [Stampede2](https://www.tacc.utexas.edu/systems/stampede2) work filesystem.
 
-**If you do not have access to Docker, but you do have access to Agave, please use the [abaco-d2s-agave]() repo instead.**
+**If you do not have access to Docker, but you do have access to Agave, please use the [abaco-d2s-agave](https://github.com/jturcino/abaco-d2s-agave) repo instead.**
 
 ## Overview
 
@@ -55,7 +55,7 @@ $ docker push $d2s_container
 ```
 
 ### 3. Create the actor
-Move to a directory where you have access to the Abaco CLI. Use `abaco create` to create a privileged actor for the docker container you just made. Once run, make note of the actor ID (`WrPZake5ZWmaR`)
+Move to a directory where you have access to the Abaco CLI. Use `abaco create` to create a privileged actor for the docker container you just made, adding the `outdir` previously defined as an environmental variable. Once run, make note of the actor ID (`WrPZake5ZWmaR`)
 ```
 $ ./abaco create -p -u -e "{\"outdir\": \"$outdir\"}" -n d2s-generic-tutorial $d2s_container
 d2s-generic-tutorial    WrPZake5ZWmaR
@@ -83,7 +83,7 @@ $ ./abaco executions -e NNy8LrbNkzpWQ WrPZake5ZWmaR
 JK3WjNrR4WwqZ    COMPLETE
 ```
 
-### 6. Check the job's logs
+### 7. Check the job's logs
 Use `abaco logs` to check that the job ran properly by providing the actor ID and execution ID. The example logfile below has been cleaned up for clarity.
 ```
 $ ./abaco logs -e NNy8LrbNkzpWQ WrPZake5ZWmaR
@@ -112,7 +112,7 @@ MOVING IMAGE VIA WORK MOUNT
 CLEANING UP
 ```
 
-### 7. View the image
+### 8. View the image
 SSH back to Stampede2 and move to the directory you specified as `outdir` in the actor setup. The directory in this example was `/work/03761/jturcino/stampede2/abaco/d2s/`.
 ```
 $ cd /work/03761/jturcino/stampede2/abaco/d2s/
